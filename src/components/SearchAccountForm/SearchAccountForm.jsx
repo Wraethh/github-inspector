@@ -5,7 +5,7 @@ export default function SearchAccountForm({ handleSubmit }) {
         type="text"
         name="search"
         aria-label="searchbar"
-        placeholder="DJK_Fifou"
+        placeholder="DJKFifou"
       />
       <button>Rechercher</button>
     </form>
