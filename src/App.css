@@ -1,3 +1,44 @@
 #root {
-    display: flex;
+  min-height: 100svh;
+  background-color: var(--darker-color);
+  display: flex;
+  position: relative;
+
+  @media screen and (max-width: 768px) {
+    overflow: hidden;
   }
+}
+
+.search {
+  width: 30%;
+  background-color: var(--dark-color);
+  padding: 1rem 2rem;
+  border-right: 2px solid var(--main-color);
+  box-shadow: 0 0 50px var(--main-color);
+
+  @media screen and (max-width: 768px) {
+    width: 100%;
+    border: none;
+  }
+}
+
+.results {
+  width: 70%;
+  height: 100%;
+
+  @media screen and (max-width: 768px) {
+    width: 100%;
+    position: absolute;
+    left: 100%;
+    background-color: var(--light-color);
+  }
+}
+
+.show-details {
+  animation: slidein 0.5s ease-in forwards;
+}
+
+@keyframes slidein {
+  from {left: 100%}
+  to {left: 0}
+}

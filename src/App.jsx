@@ -7,22 +7,36 @@ import GithubUserDetails from "./components/GitHubuserDetails/GithubUserDetails"
 
 function App() {
   const [searchParams, setSearchParams] = useState({
-    loading: false,
+    loading: {
+      list: false,
+      details: false,
+    },
     prevSearch: null,
+    showDetails: false,
   });
   const [githubUsers, setGithubUsers] = useState(null);
   const [userInfos, setUserInfos] = useState(null);
+
+  const updateLoadingState = (component, state) => {
+    setSearchParams((prev) => ({
+      ...prev,
+      loading: { ...prev.loading, [component]: state },
+    }));
+  };
 
   const fetchGithubUsers = (e) => {
     e.preventDefault();
     const request = e.target.search.value;
 
     if (request && request !== searchParams.prevSearch) {
-      setSearchParams((prev) => ({ ...prev, loading: true }));
+      updateLoadingState("list", true);
       githubRequest(`https://api.github.com/search/users?q=${request}`).then(
         (data) => {
           setGithubUsers(data);
-          setSearchParams({ prevSearch: request, loading: false });
+          setSearchParams((prev) => ({
+            prevSearch: request,
+            loading: { ...prev.loading, list: false },
+          }));
         }
       );
     }
@@ -30,11 +44,11 @@ function App() {
 
   const fetchUserInfos = (e) => {
     const username = e.target.textContent;
+    updateLoadingState("details", true);
     Promise.all([
       githubRequest(`https://api.github.com/users/${username}`),
       githubRequest(`https://api.github.com/users/${username}/repos`),
     ]).then((data) => {
-      console.log(data[1]);
       const profile = {
         avatar: data[0].avatar_url,
         username: username,
@@ -49,24 +63,33 @@ function App() {
         link: `https://github.com/${username}/${repo.name}`,
       }));
       setUserInfos([profile, repos]);
+      updateLoadingState("details", false);
     });
+    if (e.view.window.innerWidth < 768) {
+      setSearchParams((prev) => ({ ...prev, showDetails: true }));
+    }
   };
 
   return (
     <Fragment>
-      <div>
+      <div className="search">
         <header>
           <h1>Trouve ton hacker</h1>
           <SearchAccountForm handleSubmit={fetchGithubUsers} />
         </header>
         <GithubUsersList
           userList={githubUsers}
-          loading={searchParams.loading}
+          loading={searchParams.loading.list}
           handleClickItem={fetchUserInfos}
         />
       </div>
-      <div>
-        <GithubUserDetails userInfos={userInfos} />
+      <div
+        className={`results ${searchParams.showDetails ? "show-details" : ""}`}
+      >
+        <GithubUserDetails
+          userInfos={userInfos}
+          loading={searchParams.loading.details}
+        />
       </div>
     </Fragment>
   );

@@ -1,5 +1,8 @@
-export default function GithubUserDetails({ userInfos }) {
+export default function GithubUserDetails({ userInfos, loading }) {
   const [profile, repos] = userInfos ?? [];
+
+  if (loading) return <p>loading...</p>;
+
   return userInfos ? (
     <div className="computer">
       <div className="profile">

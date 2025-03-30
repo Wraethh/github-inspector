@@ -1,46 +1,25 @@
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@100;200;300;400;500;600;700&family=Press+Start+2P&display=swap');
+
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-size: 62.5%;
 
-  --primary-color: rgb(60, 0, 60);
-  --secondary-color: rgb(255, 255, 109);
+  --darker-color: #191a19;
+  --dark-color: #232b21;
+  --main-color: #1e5128;
+  --main-color--light: #4e9f3d;
+  --secondary-color: #3bfd91;
+  --light-color: #d8e9a8;
+
+  color: var(--light-color);
+  font-family: "IBM Plex Mono", monospace, system-ui, sans-serif;
 }
 
 button, a {
   cursor: pointer;
-  font-size: 1.6rem;
 }
 
-h1 {
-  font-size: 3.2rem;
-}
-
-h2 {
-  font-size: 2.4rem;
-}
-
-h3 {
-  font-size: 1.8rem;
-}
-
-h4 {
-  font-size: 1.6rem;
-}
-
-h5 {
-  font-size: 1.2rem;
-}
-
-h6 {
-  font-size: 1rem;
-}
-
-p, li {
-  font-size: 1.6rem;
-}
-
-input {
-  font-size: 1.6rem;
+ul {
+  list-style-type: none;
 }
