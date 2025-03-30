@@ -1,3 +1,4 @@
+import Loader from "../Loader/Loader";
 import GithubUserItem from "./GithubUserItem/GithubUserItem";
 
 export default function GithubUsersList({
@@ -5,7 +6,7 @@ export default function GithubUsersList({
   loading,
   handleClickItem,
 }) {
-  if (loading) return <p>loading...</p>;
+  if (loading) return <Loader />;
   if (!userList) return <p>Commencer ma recherche</p>;
 
   return userList?.items.length ? (

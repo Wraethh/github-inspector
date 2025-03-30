@@ -1,0 +1,15 @@
+.repos {
+    & h3 {
+        margin-bottom: 1rem;
+    }
+
+    & ul {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+
+        & li a {
+            font-weight: bold;
+        }
+    }
+}

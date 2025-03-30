@@ -10,27 +10,29 @@
 }
 
 .search {
-  width: 30%;
+  width: 30svw;
   background-color: var(--dark-color);
   padding: 1rem 2rem;
   border-right: 2px solid var(--main-color);
   box-shadow: 0 0 50px var(--main-color);
 
   @media screen and (max-width: 768px) {
-    width: 100%;
+    width: 100svw;
     border: none;
   }
 }
 
 .results {
-  width: 70%;
-  height: 100%;
+  width: 70svw;
+  height: 100svh;
+  padding: 70px;
+  background-color: var(--light-color);
 
   @media screen and (max-width: 768px) {
-    width: 100%;
+    width: 100svw;
+    padding: 30px;
     position: absolute;
     left: 100%;
-    background-color: var(--light-color);
   }
 }
 
@@ -39,6 +41,5 @@
 }
 
 @keyframes slidein {
-  from {left: 100%}
   to {left: 0}
 }

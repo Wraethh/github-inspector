@@ -1,0 +1,44 @@
+.profile {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1rem;
+
+    & .details {
+        max-width: calc(100% - 150px - 1rem);
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+
+        & h2 {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        & > div {
+            max-height: 100px;
+            overflow-y: auto;
+
+            & :not(p:last-of-type) {
+                margin-bottom: 0.5rem;
+            }
+        }
+    }
+
+    & .picture img {
+        max-width: 150px;
+        border: 2px solid var(--secondary-color)
+    }
+
+    @media screen and (max-width: 768px) {
+        flex-direction: column;
+
+        & .details {
+            max-width: 100%;
+            
+            & > div {
+                max-height: none;
+            }
+        }
+    }
+}

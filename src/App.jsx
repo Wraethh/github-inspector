@@ -65,9 +65,7 @@ function App() {
       setUserInfos([profile, repos]);
       updateLoadingState("details", false);
     });
-    if (e.view.window.innerWidth < 768) {
-      setSearchParams((prev) => ({ ...prev, showDetails: true }));
-    }
+    setSearchParams((prev) => ({ ...prev, showDetails: true }));
   };
 
   return (

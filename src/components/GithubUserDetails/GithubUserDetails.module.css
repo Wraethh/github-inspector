@@ -1,0 +1,12 @@
+.computer {
+    max-height: 90%;
+    max-width: 100%;
+    background-color: var(--dark-color);
+    overflow: hidden auto;
+    padding: 1rem;
+    scrollbar-color: var(--secondary-color) transparent;
+
+    & * {
+        color: var(--secondary-color);
+    }
+}
