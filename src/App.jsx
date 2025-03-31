@@ -47,7 +47,7 @@ function App() {
   const fetchUserInfos = (e) => {
     const username = e.target.textContent;
 
-    if (username === userInfos[0].username) {
+    if (username === userInfos?.profile.username) {
       setSearchParams((prev) => ({
         ...prev,
         showDetails: true,
@@ -81,7 +81,7 @@ function App() {
               link: `https://github.com/${username}/${repo.name}`,
             }))
           : [];
-        setUserInfos([profile, repos]);
+        setUserInfos({ profile: profile, repos: repos });
         updateLoadingState("details", false);
       });
     }
@@ -91,7 +91,7 @@ function App() {
     <Fragment>
       <div className="search">
         <header>
-          <h1>Trouve ton hacker</h1>
+          <h1>Find a hacker</h1>
           <SearchAccountForm handleSubmit={fetchGithubUsers} />
         </header>
         <GithubUsersList
@@ -109,6 +109,7 @@ function App() {
           userInfos={userInfos}
           loading={searchParams.loading.details}
           powerOff={searchParams.powerOff}
+          searchedOnce={!!githubUsers}
         />
         <button
           aria-label="power off"

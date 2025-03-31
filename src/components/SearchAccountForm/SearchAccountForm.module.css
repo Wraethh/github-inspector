@@ -1,6 +1,83 @@
 .form {
+    --form-h: 40px;
+
+    margin-block: 1rem;
+    min-height: var(--form-h);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
 
     & input {
-        color: var(--main-color)
+        color: var(--main-color);
+        max-height: var(--form-h);
+        width: clamp(180px, calc(100% - var(--form-h) - 1rem), 300px);
+        padding: .5rem;
+        border: 2px solid var(--main-color);
+        font-weight: 500;
+        font-size: 1.2rem;
+        background-color: var(--light-color);
+
+        @media screen and (max-width:1024px) {
+            width: 100%;
+        }
+
+    }
+
+    & button {
+        width: var(--form-h);
+        height: var(--form-h);
+        font-weight: 500;
+        border: none;
+        background-color: var(--main-color);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 1rem;
+        transition: all 0.2s;
+
+        & .searchIcon {
+            position: relative;
+            width: 20px;
+            height: 20px;
+            border: 3px solid var(--light-color);
+            border-radius: 50%;
+            transform: translate(-10%, -10%);
+            transition: all 0.2s;
+
+            &::after {
+                content: '';
+                position: absolute;
+                width: 3px;
+                height: 10px;
+                background-color: var(--light-color);
+                right: 0;
+                bottom: 0;
+                transform: rotate(-45deg) translate(-1px, 7px) ;
+                transition: all 0.2s;
+            }
+        }
+
+        @media screen and (max-width:1024px) {
+            width: 100%;
+        }
+
+        @media (pointer: fine) {
+            &:hover {
+                color: var(--main-color);
+                background-color: var(--main-color--light);
+                border: 2px solid var(--main-color);
+                transition: background-color 0.2s;
+
+                & .searchIcon {
+                    border-color: var(--main-color);
+                    transition: border-color 0.2s;
+
+                    &::after {
+                        background-color: var(--main-color);
+                        transition: all 0.2s;
+                    }
+                }
+            }
+        }
     }
 }

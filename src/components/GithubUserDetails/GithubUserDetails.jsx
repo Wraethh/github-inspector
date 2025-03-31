@@ -4,13 +4,23 @@ import Loader from "../Loader/Loader";
 import GithubUserProfile from "../GithubUserDetails/GithubUserProfile/GithubUserProfile";
 import GithubUserRepos from "../GithubUserDetails/GithubUserRepos/GithubUserRepos";
 
-export default function GithubUserDetails({ userInfos, loading, powerOff }) {
-  const [profile, repos] = userInfos ?? [];
-
+export default function GithubUserDetails({
+  userInfos,
+  loading,
+  powerOff,
+  searchedOnce,
+}) {
   if (loading)
     return (
       <div className={styles.computer}>
         <Loader />
+      </div>
+    );
+
+  if (!powerOff && !searchedOnce)
+    return (
+      <div className={styles.computer}>
+        <p>Start by entering something in the input :)</p>
       </div>
     );
 
@@ -23,8 +33,8 @@ export default function GithubUserDetails({ userInfos, loading, powerOff }) {
     >
       {userInfos && !powerOff ? (
         <Fragment>
-          <GithubUserProfile profile={profile} />
-          <GithubUserRepos repos={repos} />
+          <GithubUserProfile profile={userInfos.profile} />
+          <GithubUserRepos repos={userInfos.repos} />
         </Fragment>
       ) : (
         ""
