@@ -8,7 +8,7 @@ export default function GithubUserDetails({
   userInfos,
   loading,
   powerOff,
-  searchedOnce,
+  usersList,
 }) {
   if (loading)
     return (
@@ -17,10 +17,15 @@ export default function GithubUserDetails({
       </div>
     );
 
-  if (!powerOff && !searchedOnce)
+  if (!powerOff && !userInfos)
     return (
       <div className={styles.computer}>
-        <p>Start by entering something in the input :)</p>
+        <p>
+          {!usersList && "Try typing something in the search bar first"}
+          {usersList?.total_count === 0 && "Better luck next time"}
+          {usersList?.total_count > 0 &&
+            "Select a profile in the list to see more details"}
+        </p>
       </div>
     );
 

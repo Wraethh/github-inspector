@@ -109,7 +109,7 @@ function App() {
           userInfos={userInfos}
           loading={searchParams.loading.details}
           powerOff={searchParams.powerOff}
-          searchedOnce={!!githubUsers}
+          usersList={githubUsers}
         />
         <button
           aria-label="power off"

@@ -17,10 +17,16 @@
         font-size: 1.2rem;
         background-color: var(--light-color);
 
+        &:-webkit-autofill,
+        &:-webkit-autofill:hover, 
+        &:-webkit-autofill:focus {
+            -webkit-box-shadow: 0 0 0 50px var(--light-color) inset;
+            -webkit-text-fill-color: var(--main-color);
+        }
+
         @media screen and (max-width:1024px) {
             width: 100%;
         }
-
     }
 
     & button {

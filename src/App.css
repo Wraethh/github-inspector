@@ -11,8 +11,10 @@
 
 .search {
   width: 30svw;
+  height: 100svh;
   background-color: var(--darker-color);
   padding: 1rem 2rem;
+  padding-bottom: none;
   border-right: 2px solid var(--main-color);
 
   @media screen and (max-width: 768px) {
