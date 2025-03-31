@@ -1,0 +1,6 @@
+.form {
+
+    & input {
+        color: var(--main-color)
+    }
+}

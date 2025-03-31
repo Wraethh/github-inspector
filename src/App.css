@@ -101,9 +101,11 @@
 }
 
 .show-details {
-  animation: slidein 0.5s ease-in forwards;
+  left: 0;
+  transition: left 0.5s;
 }
 
-@keyframes slidein {
-  to {left: 0}
+.hide-details {
+  left: 100%;
+  transition: left 0.5s;
 }

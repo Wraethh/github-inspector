@@ -4,6 +4,7 @@ import "./App.css";
 import SearchAccountForm from "./components/SearchAccountForm/SearchAccountForm";
 import GithubUsersList from "./components/GithubUserList/GithubUsersList";
 import GithubUserDetails from "./components/GitHubuserDetails/GithubUserDetails";
+import anon from "./assets/anon.webp";
 
 function App() {
   const [searchParams, setSearchParams] = useState({
@@ -46,10 +47,17 @@ function App() {
   const fetchUserInfos = (e) => {
     const username = e.target.textContent;
 
-    if (!userInfos || username !== userInfos[0].username) {
+    if (username === userInfos[0].username) {
+      setSearchParams((prev) => ({
+        ...prev,
+        showDetails: true,
+        powerOff: false,
+      }));
+    } else {
       setSearchParams((prev) => ({
         ...prev,
         loading: { ...prev.loading, details: true },
+        showDetails: true,
         powerOff: false,
       }));
 
@@ -58,22 +66,24 @@ function App() {
         githubRequest(`https://api.github.com/users/${username}/repos`),
       ]).then((data) => {
         const profile = {
-          avatar: data[0].avatar_url,
+          avatar: data[0].avatar_url ?? anon,
           username: username,
-          bio: data[0].bio,
-          location: data[0].location,
+          bio: data[0].bio ?? "No information available",
+          location: data[0].location ?? "???",
           link: `https://github.com/${username}`,
+          error: data[0].status ? true : false,
         };
-        const repos = data[1].map((repo) => ({
-          id: repo.id,
-          name: repo.name,
-          desc: repo.description,
-          link: `https://github.com/${username}/${repo.name}`,
-        }));
+        const repos = data[1].length
+          ? data[1].map((repo) => ({
+              id: repo.id,
+              name: repo.name,
+              desc: repo.description,
+              link: `https://github.com/${username}/${repo.name}`,
+            }))
+          : [];
         setUserInfos([profile, repos]);
         updateLoadingState("details", false);
       });
-      setSearchParams((prev) => ({ ...prev, showDetails: true }));
     }
   };
 
@@ -91,7 +101,9 @@ function App() {
         />
       </div>
       <div
-        className={`results ${searchParams.showDetails ? "show-details" : ""}`}
+        className={`results ${
+          searchParams.showDetails ? "show-details" : "hide-details"
+        }`}
       >
         <GithubUserDetails
           userInfos={userInfos}
@@ -99,8 +111,13 @@ function App() {
           powerOff={searchParams.powerOff}
         />
         <button
+          aria-label="power off"
           onClick={() =>
-            setSearchParams((prev) => ({ ...prev, powerOff: !prev.powerOff }))
+            setSearchParams((prev) => ({
+              ...prev,
+              showDetails: false,
+              powerOff: !prev.powerOff,
+            }))
           }
         ></button>
       </div>

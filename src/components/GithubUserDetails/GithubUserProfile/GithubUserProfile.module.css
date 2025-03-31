@@ -18,9 +18,14 @@
         & > div {
             max-height: 100px;
             overflow-y: auto;
+            word-break: break-word;
 
             & :not(p:last-of-type) {
                 margin-bottom: 0.5rem;
+            }
+
+            & .error {
+                color: red;
             }
         }
     }

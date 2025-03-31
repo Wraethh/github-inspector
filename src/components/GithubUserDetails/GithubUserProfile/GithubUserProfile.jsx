@@ -11,8 +11,12 @@ export default function GithubUserProfile({ profile }) {
       <div className={styles.details}>
         <h2 title={profile.username}>{profile.username}</h2>
         <div>
-          <p>📝 {profile.bio ? profile.bio : "Aucune information"}</p>
-          <p>🌎 {profile.location ? profile.location : "???"}</p>
+          <p className={profile.error ? styles.error : ""}>
+            📝 {profile.error ? "ERROR: AGENT DISCONTINUED" : profile.bio}
+          </p>
+          <p className={profile.error ? styles.error : ""}>
+            🌎 {profile.error ? "ERROR: AGENT DISCONTINUED" : profile.location}
+          </p>
         </div>
       </div>
     </div>
