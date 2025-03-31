@@ -11,10 +11,9 @@
 
 .search {
   width: 30svw;
-  background-color: var(--dark-color);
+  background-color: var(--darker-color);
   padding: 1rem 2rem;
   border-right: 2px solid var(--main-color);
-  box-shadow: 0 0 50px var(--main-color);
 
   @media screen and (max-width: 768px) {
     width: 100svw;
@@ -25,14 +24,79 @@
 .results {
   width: 70svw;
   height: 100svh;
-  padding: 70px;
+  padding: 50px;
+  padding-bottom: 80px;
   background-color: var(--light-color);
+  
+  & button {
+    width: 45px;
+    height: 45px;
+    background-color: var(--main-color);
+    border: none;
+    border-radius: 50%;
+    position: absolute;
+    bottom: 17.5px;
+    right: 67.5px;
+    box-shadow: -2px -2px 5px inset var(--dark-color), 2px 2px 5px inset var(--dark-color);
+    transition: all 0.3s;
+
+    &::before {
+      content: '';
+      position: absolute;
+      width: 50%;
+      height: 50%;
+      border: 3px solid var(--light-color);
+      border-radius: 50%;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      transition: border 0.3s;
+    }
+
+    &::after {
+      content: '';
+      position: absolute;
+      width: 3px;
+      height: 30%;
+      background-color: var(--light-color);
+      box-shadow: 0 3px 0 3px var(--main-color);
+      top: 17%;
+      left: 50%;
+      transform: translateX(-50%);
+      transition: all 0.3s;
+    }
+
+    @media (pointer: fine) {
+      &:hover {
+        background-color: var(--main-color--light);
+        box-shadow: none;
+        border: 3px solid var(--main-color);
+        transition: all 0.3s;
+
+        &::before {
+          border: 3px solid var(--main-color);
+          transition: border 0.3s;
+        }
+
+        &::after {
+          background-color: var(--main-color);
+          box-shadow: 0 3px 0 3px var(--main-color--light);
+          transition: all 0.3s;
+        }
+      }
+    }
+  }
 
   @media screen and (max-width: 768px) {
     width: 100svw;
     padding: 30px;
+    padding-bottom: 80px;
     position: absolute;
     left: 100%;
+
+    & button {
+      right: 47.5px;
+    }
   }
 }
 

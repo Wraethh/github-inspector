@@ -13,6 +13,7 @@ function App() {
     },
     prevSearch: null,
     showDetails: false,
+    powerOff: true,
   });
   const [githubUsers, setGithubUsers] = useState(null);
   const [userInfos, setUserInfos] = useState(null);
@@ -44,28 +45,36 @@ function App() {
 
   const fetchUserInfos = (e) => {
     const username = e.target.textContent;
-    updateLoadingState("details", true);
-    Promise.all([
-      githubRequest(`https://api.github.com/users/${username}`),
-      githubRequest(`https://api.github.com/users/${username}/repos`),
-    ]).then((data) => {
-      const profile = {
-        avatar: data[0].avatar_url,
-        username: username,
-        bio: data[0].bio,
-        location: data[0].location,
-        link: `https://github.com/${username}`,
-      };
-      const repos = data[1].map((repo) => ({
-        id: repo.id,
-        name: repo.name,
-        desc: repo.description,
-        link: `https://github.com/${username}/${repo.name}`,
+
+    if (!userInfos || username !== userInfos[0].username) {
+      setSearchParams((prev) => ({
+        ...prev,
+        loading: { ...prev.loading, details: true },
+        powerOff: false,
       }));
-      setUserInfos([profile, repos]);
-      updateLoadingState("details", false);
-    });
-    setSearchParams((prev) => ({ ...prev, showDetails: true }));
+
+      Promise.all([
+        githubRequest(`https://api.github.com/users/${username}`),
+        githubRequest(`https://api.github.com/users/${username}/repos`),
+      ]).then((data) => {
+        const profile = {
+          avatar: data[0].avatar_url,
+          username: username,
+          bio: data[0].bio,
+          location: data[0].location,
+          link: `https://github.com/${username}`,
+        };
+        const repos = data[1].map((repo) => ({
+          id: repo.id,
+          name: repo.name,
+          desc: repo.description,
+          link: `https://github.com/${username}/${repo.name}`,
+        }));
+        setUserInfos([profile, repos]);
+        updateLoadingState("details", false);
+      });
+      setSearchParams((prev) => ({ ...prev, showDetails: true }));
+    }
   };
 
   return (
@@ -87,7 +96,13 @@ function App() {
         <GithubUserDetails
           userInfos={userInfos}
           loading={searchParams.loading.details}
+          powerOff={searchParams.powerOff}
         />
+        <button
+          onClick={() =>
+            setSearchParams((prev) => ({ ...prev, powerOff: !prev.powerOff }))
+          }
+        ></button>
       </div>
     </Fragment>
   );

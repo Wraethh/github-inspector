@@ -11,9 +11,7 @@ export default function GithubUserProfile({ profile }) {
       <div className={styles.details}>
         <h2 title={profile.username}>{profile.username}</h2>
         <div>
-          <p>
-            📝 {profile.bio ? profile.bio : "Ne veut pas trop en divulguer..."}
-          </p>
+          <p>📝 {profile.bio ? profile.bio : "Aucune information"}</p>
           <p>🌎 {profile.location ? profile.location : "???"}</p>
         </div>
       </div>
