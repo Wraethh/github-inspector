@@ -11,16 +11,20 @@ export default function GithubUsersList({
   const [headerHeight, setHeaderHeight] = useState(0);
 
   useEffect(() => {
-    const updateHeaderHeight = () => {
-      setHeaderHeight(document.getElementsByTagName("header")[0].clientHeight);
-    };
+    const header = document.getElementsByTagName("header")[0];
 
-    window.addEventListener("resize", updateHeaderHeight);
+    var ro = new ResizeObserver((entries) => {
+      for (const _ of entries) {
+        setHeaderHeight(header.getBoundingClientRect().height);
+      }
+    });
+    ro.observe(header);
 
     return () => {
-      window.removeEventListener("resize", updateHeaderHeight);
+      ro.unobserve(header);
+      ro.disconnect();
     };
-  }, [headerHeight]);
+  }, []);
 
   if (loading) return <Loader />;
   if (!userList) return <p>Waiting for your input...</p>;
