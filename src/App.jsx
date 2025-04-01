@@ -1,4 +1,4 @@
-import { Fragment, useState } from "react";
+import { Fragment, useEffect, useRef, useState } from "react";
 import { githubRequest } from "./libs/utils";
 import "./App.css";
 import SearchAccountForm from "./components/SearchAccountForm/SearchAccountForm";
@@ -7,6 +7,8 @@ import GithubUserDetails from "./components/GitHubuserDetails/GithubUserDetails"
 import anon from "./assets/anon.webp";
 
 function App() {
+  const [githubUsers, setGithubUsers] = useState(null);
+  const [userInfos, setUserInfos] = useState(null);
   const [searchParams, setSearchParams] = useState({
     loading: {
       list: false,
@@ -14,10 +16,31 @@ function App() {
     },
     prevSearch: null,
     showDetails: false,
-    powerOff: true,
+    terminalTurnedOn: false,
   });
-  const [githubUsers, setGithubUsers] = useState(null);
-  const [userInfos, setUserInfos] = useState(null);
+  const [styleParams, setStyleParams] = useState({
+    headerHeight: 0,
+  });
+  const headerRef = useRef(null);
+
+  useEffect(() => {
+    const header = headerRef.current;
+    if (!header) return;
+
+    const ro = new ResizeObserver((entries) => {
+      for (const entry of entries) {
+        setStyleParams((prev) => ({
+          ...prev,
+          headerHeight: entry.contentRect.height,
+        }));
+      }
+    });
+    ro.observe(header);
+
+    return () => {
+      ro.disconnect();
+    };
+  }, []);
 
   const updateLoadingState = (component, state) => {
     setSearchParams((prev) => ({
@@ -36,8 +59,9 @@ function App() {
         (data) => {
           setGithubUsers(data);
           setSearchParams((prev) => ({
-            prevSearch: request,
+            ...prev,
             loading: { ...prev.loading, list: false },
+            prevSearch: request,
           }));
         }
       );
@@ -51,14 +75,14 @@ function App() {
       setSearchParams((prev) => ({
         ...prev,
         showDetails: true,
-        powerOff: false,
+        terminalTurnedOn: true,
       }));
     } else {
       setSearchParams((prev) => ({
         ...prev,
         loading: { ...prev.loading, details: true },
         showDetails: true,
-        powerOff: false,
+        terminalTurnedOn: true,
       }));
 
       Promise.all([
@@ -90,7 +114,7 @@ function App() {
   return (
     <Fragment>
       <div className="search">
-        <header>
+        <header ref={headerRef}>
           <h1>Find a hacker</h1>
           <SearchAccountForm handleSubmit={fetchGithubUsers} />
         </header>
@@ -98,6 +122,7 @@ function App() {
           userList={githubUsers}
           loading={searchParams.loading.list}
           handleClickItem={fetchUserInfos}
+          headerHeight={styleParams.headerHeight}
         />
       </div>
       <div
@@ -108,7 +133,7 @@ function App() {
         <GithubUserDetails
           userInfos={userInfos}
           loading={searchParams.loading.details}
-          powerOff={searchParams.powerOff}
+          terminalTurnedOn={searchParams.terminalTurnedOn}
           usersList={githubUsers}
         />
         <button
@@ -117,7 +142,7 @@ function App() {
             setSearchParams((prev) => ({
               ...prev,
               showDetails: false,
-              powerOff: !prev.powerOff,
+              terminalTurnedOn: !prev.terminalTurnedOn,
             }))
           }
         ></button>

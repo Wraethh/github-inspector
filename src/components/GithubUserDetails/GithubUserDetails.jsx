@@ -7,7 +7,7 @@ import GithubUserRepos from "../GithubUserDetails/GithubUserRepos/GithubUserRepo
 export default function GithubUserDetails({
   userInfos,
   loading,
-  powerOff,
+  terminalTurnedOn,
   usersList,
 }) {
   if (loading)
@@ -17,7 +17,7 @@ export default function GithubUserDetails({
       </div>
     );
 
-  if (!powerOff && !userInfos)
+  if (terminalTurnedOn && !userInfos)
     return (
       <div className={styles.computer}>
         <p>
@@ -33,10 +33,12 @@ export default function GithubUserDetails({
     <div
       className={styles.computer}
       style={
-        !userInfos || powerOff ? { backgroundColor: "var(--darker-color)" } : {}
+        !userInfos || !terminalTurnedOn
+          ? { backgroundColor: "var(--darker-color)" }
+          : {}
       }
     >
-      {userInfos && !powerOff ? (
+      {userInfos && terminalTurnedOn ? (
         <Fragment>
           <GithubUserProfile profile={userInfos.profile} />
           <GithubUserRepos repos={userInfos.repos} />
