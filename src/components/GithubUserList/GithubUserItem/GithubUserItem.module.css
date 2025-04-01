@@ -1,6 +1,26 @@
 .item {
     width: 100%;
-    padding: 0.2rem;
+    margin-top: 0.5rem;
+    transition: scale 0.4s;
+
+    @media (pointer: fine) {
+        &:hover, &:has(button:focus) {
+            scale: 1.1;
+            transition: scale 0.4s;
+        }
+
+        &:hover + *, &:has(button:focus) + *, &:has(+ *:hover), &:has(+ * button:focus) {
+            scale: 1.05;
+            transition: scale 0.8s;
+        }
+    }
+
+    & .selected {
+        background-color: var(--light-color);
+        color: var(--main-color);
+        box-shadow: 0 0 0 2px inset var(--main-color);
+        padding-right: 2.5rem;
+    }
 
     & button {
         width: 100%;
@@ -32,7 +52,6 @@
                 color: var(--main-color);
                 box-shadow: 0 0 0 2px inset var(--main-color);
                 padding-right: 2.5rem;
-                scale: 1.1;
                 transition: all 0.2s;
                 
                 &::after {
@@ -42,5 +61,4 @@
             }
         }
     }
-
 }
