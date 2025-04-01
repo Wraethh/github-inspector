@@ -68,7 +68,7 @@
         }
 
         @media (pointer: fine) {
-            &:hover {
+            &:hover, &:focus {
                 color: var(--main-color);
                 background-color: var(--main-color--light);
                 border: 2px solid var(--main-color);

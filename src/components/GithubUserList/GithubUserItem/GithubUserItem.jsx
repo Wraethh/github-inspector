@@ -1,8 +1,8 @@
+import styles from "./GithubUserItem.module.css";
 import PropTypes from "prop-types";
-
 export default function GithubUserItem({ username, handleClickItem }) {
   return (
-    <li>
+    <li className={styles.item}>
       <button onClick={handleClickItem}>{username}</button>
     </li>
   );

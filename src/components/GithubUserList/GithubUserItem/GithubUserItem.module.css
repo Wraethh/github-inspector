@@ -1,0 +1,46 @@
+.item {
+    width: 100%;
+    padding: 0.2rem;
+
+    & button {
+        width: 100%;
+        border: none;
+        background-color: var(--dark-color);
+        padding: 1rem;
+        text-align: left;
+        font-weight: 500;
+        font-size: 1rem;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        position: relative;
+        transition: all 0.2s;
+
+        &::after {
+            position: absolute;
+            content: '→';
+            font-size: 2rem;
+            line-height: 0;
+            right: 1rem;
+            transform: translateY(8px);
+            opacity: 0;
+        }
+        
+        @media (pointer: fine) {
+            &:hover, &:focus {
+                background-color: var(--light-color);
+                color: var(--main-color);
+                box-shadow: 0 0 0 2px inset var(--main-color);
+                padding-right: 2.5rem;
+                scale: 1.1;
+                transition: all 0.2s;
+                
+                &::after {
+                    opacity: 1;
+                    transition: opacity 0.5s;
+                }
+            }
+        }
+    }
+
+}

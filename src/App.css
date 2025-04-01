@@ -69,7 +69,7 @@
     }
 
     @media (pointer: fine) {
-      &:hover {
+      &:hover, &:focus {
         background-color: var(--main-color--light);
         box-shadow: none;
         border: 3px solid var(--main-color);

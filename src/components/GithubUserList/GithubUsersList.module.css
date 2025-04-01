@@ -4,8 +4,13 @@
     row-gap: 1rem;
 
     & ul {
-        overflow: hidden auto;
+        width: calc(100% + 4rem);
+        transform: translateX(-2rem);
+        padding-inline: 2rem;
+        overflow: visible auto;
         scrollbar-color: var(--light-color) transparent;
         scrollbar-width: thin;
+        display: flex;
+        flex-direction: column;
     }
 }
