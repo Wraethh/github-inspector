@@ -1,8 +1,10 @@
+import { useRef } from "react";
 import styles from "./SearchAccountForm.module.css";
-import useScreenWidth from "../../hooks/useScreenWidth";
+import useResizeObserver from "../../hooks/useResizeObserver";
 
 export default function SearchAccountForm({ handleSubmit }) {
-  const screenWidth = useScreenWidth();
+  const buttonRef = useRef(null);
+  const buttonWidth = useResizeObserver(buttonRef, "width");
 
   return (
     <form onSubmit={handleSubmit} className={styles.form}>
@@ -12,8 +14,8 @@ export default function SearchAccountForm({ handleSubmit }) {
         aria-label="searchbar"
         placeholder="DJKFifou"
       />
-      <button aria-label="search">
-        {screenWidth <= 1024 ? "Rechercher" : ""}
+      <button aria-label="search" ref={buttonRef}>
+        {buttonWidth > 40 ? "Rechercher" : ""}
         <div className={styles.searchIcon}></div>
       </button>
     </form>

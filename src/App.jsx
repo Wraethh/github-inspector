@@ -1,4 +1,5 @@
-import { Fragment, useEffect, useRef, useState } from "react";
+import { Fragment, useRef, useState } from "react";
+import useResizeObserver from "./hooks/useResizeObserver";
 import { githubRequest } from "./libs/utils";
 import "./App.css";
 import SearchAccountForm from "./components/SearchAccountForm/SearchAccountForm";
@@ -18,29 +19,8 @@ function App() {
     showDetails: false,
     terminalTurnedOn: false,
   });
-  const [styleParams, setStyleParams] = useState({
-    headerHeight: 0,
-  });
   const headerRef = useRef(null);
-
-  useEffect(() => {
-    const header = headerRef.current;
-    if (!header) return;
-
-    const ro = new ResizeObserver((entries) => {
-      for (const entry of entries) {
-        setStyleParams((prev) => ({
-          ...prev,
-          headerHeight: entry.contentRect.height,
-        }));
-      }
-    });
-    ro.observe(header);
-
-    return () => {
-      ro.disconnect();
-    };
-  }, []);
+  const headerHeight = useResizeObserver(headerRef, "height");
 
   const updateLoadingState = (component, state) => {
     setSearchParams((prev) => ({
@@ -72,43 +52,46 @@ function App() {
     const username = e.target.textContent;
 
     if (username === userInfos?.profile.username) {
+      /* mobile version needs to be able to reclick on the button to show user details due to layout,
+       * so instead of disabling the button, we get a condition terminating the function */
       setSearchParams((prev) => ({
         ...prev,
         showDetails: true,
         terminalTurnedOn: true,
       }));
-    } else {
-      setSearchParams((prev) => ({
-        ...prev,
-        loading: { ...prev.loading, details: true },
-        showDetails: true,
-        terminalTurnedOn: true,
-      }));
-
-      Promise.all([
-        githubRequest(`https://api.github.com/users/${username}`),
-        githubRequest(`https://api.github.com/users/${username}/repos`),
-      ]).then((data) => {
-        const profile = {
-          avatar: data[0].avatar_url ?? anon,
-          username: username,
-          bio: data[0].bio ?? "No information available",
-          location: data[0].location ?? "???",
-          link: `https://github.com/${username}`,
-          error: data[0].status ? true : false,
-        };
-        const repos = data[1].length
-          ? data[1].map((repo) => ({
-              id: repo.id,
-              name: repo.name,
-              desc: repo.description,
-              link: `https://github.com/${username}/${repo.name}`,
-            }))
-          : [];
-        setUserInfos({ profile: profile, repos: repos });
-        updateLoadingState("details", false);
-      });
+      return;
     }
+
+    setSearchParams((prev) => ({
+      ...prev,
+      loading: { ...prev.loading, details: true },
+      showDetails: true,
+      terminalTurnedOn: true,
+    }));
+
+    Promise.all([
+      githubRequest(`https://api.github.com/users/${username}`),
+      githubRequest(`https://api.github.com/users/${username}/repos`),
+    ]).then((data) => {
+      const profile = {
+        avatar: data[0].avatar_url ?? anon,
+        username: username,
+        bio: data[0].bio ?? "No information available",
+        location: data[0].location ?? "???",
+        link: `https://github.com/${username}`,
+        error: data[0].status ? true : false,
+      };
+      const repos = data[1].length
+        ? data[1].map((repo) => ({
+            id: repo.id,
+            name: repo.name,
+            desc: repo.description,
+            link: `https://github.com/${username}/${repo.name}`,
+          }))
+        : [];
+      setUserInfos({ profile: profile, repos: repos });
+      updateLoadingState("details", false);
+    });
   };
 
   return (
@@ -122,7 +105,7 @@ function App() {
           userList={githubUsers}
           loading={searchParams.loading.list}
           handleClickItem={fetchUserInfos}
-          headerHeight={styleParams.headerHeight}
+          headerHeight={headerHeight}
         />
       </div>
       <div
@@ -137,7 +120,7 @@ function App() {
           usersList={githubUsers}
         />
         <button
-          aria-label="power off"
+          aria-label="power"
           onClick={() =>
             setSearchParams((prev) => ({
               ...prev,
