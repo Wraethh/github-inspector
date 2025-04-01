@@ -128,6 +128,7 @@ function App() {
               terminalTurnedOn: !prev.terminalTurnedOn,
             }))
           }
+          onMouseUp={(e) => e.target.blur()}
         ></button>
       </div>
     </Fragment>

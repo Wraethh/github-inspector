@@ -14,9 +14,16 @@ export default function SearchAccountForm({ handleSubmit }) {
         aria-label="searchbar"
         placeholder="DJKFifou"
       />
-      <button aria-label="search" ref={buttonRef}>
+      <button
+        aria-label="search"
+        ref={buttonRef}
+        onMouseUp={(e) => e.target.blur()}
+      >
         {buttonWidth > 40 ? "Rechercher" : ""}
-        <div className={styles.searchIcon}></div>
+        <div
+          className={styles.searchIcon}
+          onMouseUp={(e) => e.target.parentElement.blur()}
+        ></div>
       </button>
     </form>
   );
