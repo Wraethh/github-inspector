@@ -30,25 +30,27 @@ export default function SearchAccountForm({ handleSubmit }) {
 
   return (
     <form onSubmit={handleSubmit} className={styles.form}>
-      <input
-        type="text"
-        name="search"
-        ref={inputRef}
-        aria-label="searchbar"
-        placeholder="DJKFifou"
-        onChange={(e) => setInputEmpty(!e.target.value)}
-      />
-      {!inputEmpty && (
-        <button
-          type="button"
-          aria-label="Erase"
-          title="Erase"
-          className={styles.eraseBtn}
-          onClick={resetInputWithStyle}
-        >
-          ×
-        </button>
-      )}
+      <div className={styles.searchBarWrapper}>
+        <input
+          type="text"
+          name="search"
+          ref={inputRef}
+          aria-label="searchbar"
+          placeholder="DJKFifou"
+          onChange={(e) => setInputEmpty(!e.target.value)}
+        />
+        {!inputEmpty && (
+          <button
+            type="button"
+            aria-label="Erase"
+            title="Erase"
+            className={styles.eraseBtn}
+            onClick={resetInputWithStyle}
+          >
+            ×
+          </button>
+        )}
+      </div>
       <button
         type="submit"
         aria-label="Search"
