@@ -6,7 +6,7 @@ export default function GithubUserItem({
   selected,
 }) {
   return (
-    <li className={styles.item} onMouseOver={(e) => e.target.blur()}>
+    <li className={styles.item} onMouseUp={(e) => e.target.blur()}>
       <button
         onClick={handleClickItem}
         className={selected ? styles.selected : ""}
