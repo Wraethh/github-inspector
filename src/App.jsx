@@ -4,7 +4,7 @@ import { githubRequest } from "./libs/utils";
 import "./App.css";
 import SearchAccountForm from "./components/SearchAccountForm/SearchAccountForm";
 import GithubUsersList from "./components/GithubUserList/GithubUsersList";
-import GithubUserDetails from "./components/GitHubuserDetails/GithubUserDetails";
+import GithubUserDetails from "./components/GithubUserDetails/GithubUserDetails";
 import anon from "./assets/anon.webp";
 
 function App() {
