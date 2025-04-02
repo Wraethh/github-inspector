@@ -6,12 +6,14 @@
     display: flex;
     flex-wrap: wrap;
     gap: 1rem;
+    position: relative;
 
     & input {
         color: var(--main-color);
         max-height: var(--form-h);
         width: clamp(180px, calc(100% - var(--form-h) - 1rem), 300px);
         padding: .5rem;
+        padding-right: 2rem;
         border: 2px solid var(--main-color);
         font-weight: 500;
         font-size: 1.2rem;
@@ -29,7 +31,7 @@
         }
     }
 
-    & button {
+    & .searchBtn {
         width: var(--form-h);
         height: var(--form-h);
         font-weight: 500;
@@ -84,6 +86,22 @@
                     }
                 }
             }
+        }
+    }
+
+    & .eraseBtn {
+        background-color: transparent;
+        color: var(--main-color);
+        border: none;
+        position: absolute;
+        left: calc(100% - var(--form-h) - 1rem - 0.5rem);
+        top: calc((var(--form-h) / 2) - 2.5px);
+        transform: translate(-100%, -50%);
+        font-weight: 500;
+        font-size: 2rem;
+
+        @media screen and (max-width: 1024px) {
+            left: calc(100% - 0.5rem);
         }
     }
 }
