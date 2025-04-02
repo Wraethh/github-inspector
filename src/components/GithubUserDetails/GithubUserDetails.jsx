@@ -1,5 +1,5 @@
 import { Fragment } from "react";
-import styles from "./GitHubuserDetails.module.css";
+import styles from "./GithubUserDetails.module.css";
 import Loader from "../Loader/Loader";
 import GithubUserProfile from "../GithubUserDetails/GithubUserProfile/GithubUserProfile";
 import GithubUserRepos from "../GithubUserDetails/GithubUserRepos/GithubUserRepos";
