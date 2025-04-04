@@ -20,7 +20,7 @@ export default function GithubUserDetails({
   if (terminalTurnedOn && !userInfos)
     return (
       <div className={styles.computer}>
-        <p>
+        <p className={styles.textCursor}>
           {!usersList && "Try typing something in the search bar first"}
           {usersList?.total_count === 0 && "Better luck next time"}
           {usersList?.total_count > 0 &&

@@ -75,10 +75,10 @@ function App() {
     ]).then((data) => {
       const profile = {
         avatar: data[0].avatar_url ?? anon,
-        username: username,
+        username: data[0].name ?? username,
         bio: data[0].bio ?? "No information available",
         location: data[0].location ?? "???",
-        link: `https://github.com/${username}`,
+        link: data[0].html_url ?? `https://github.com/${username}`,
         error: data[0].status ? true : false,
       };
       const reposPromise = data[1].length
