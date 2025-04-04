@@ -13,11 +13,12 @@ export default function SearchAccountForm({ handleSubmit }) {
     const inputValue = inputRef.current.value;
     if (inputValue) {
       inputRef.current.value = inputValue.slice(0, inputValue.length - 1);
-      timeoutId = setTimeout(() => {
+      return (timeoutId = setTimeout(() => {
         resetInputWithStyle();
-      }, 30);
+      }, 30));
     }
     setInputEmpty(true);
+    inputRef.current.focus();
   };
 
   useEffect(() => {
