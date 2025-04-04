@@ -81,16 +81,29 @@ function App() {
         link: `https://github.com/${username}`,
         error: data[0].status ? true : false,
       };
-      const repos = data[1].length
-        ? data[1].map((repo) => ({
-            id: repo.id,
-            name: repo.name,
-            desc: repo.description,
-            link: `https://github.com/${username}/${repo.name}`,
-          }))
-        : [];
-      setUserInfos({ profile: profile, repos: repos });
-      updateLoadingState("details", false);
+      const reposPromise = data[1].length
+        ? Promise.all(
+            data[1].map(async (repo) => {
+              const repoLang = await githubRequest(
+                `https://api.github.com/repos/${username}/${repo.name}/languages`
+              );
+              const langs = Object.keys(repoLang);
+
+              return {
+                id: repo.id,
+                name: repo.name,
+                desc: repo.description,
+                langs,
+                link: `https://github.com/${username}/${repo.name}`,
+              };
+            })
+          )
+        : Promise.resolve([]);
+
+      reposPromise.then((repos) => {
+        setUserInfos({ profile: profile, repos: repos });
+        updateLoadingState("details", false);
+      });
     });
   };
 

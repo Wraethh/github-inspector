@@ -6,10 +6,29 @@
     & ul {
         display: flex;
         flex-direction: column;
-        gap: 0.5rem;
+        gap: 1rem;
 
-        & li a {
-            font-weight: bold;
+        & li {
+            display: flex;
+            flex-direction: column;
+            row-gap: 0.2rem;
+
+            & a {
+                font-weight: bold;
+            }
+
+            & .langList {
+                display: flex;
+                flex-flow: row wrap;
+                gap: 0.5rem;
+        
+                & li {
+                    padding-inline: 0.4rem;
+                    background-color: var(--secondary-color);
+                    color: var(--dark-color);
+                    font-weight: 500;
+                }
+            }
         }
     }
 }

@@ -14,6 +14,11 @@ export default function GithubUserRepos({ repos }) {
                 {repo.name}
               </a>
               <p>{repo.desc}</p>
+              <ul className={styles.langList}>
+                {repo.langs.map((lang) => (
+                  <li key={crypto.randomUUID()}>{lang}</li>
+                ))}
+              </ul>
             </li>
           ))
         )}
