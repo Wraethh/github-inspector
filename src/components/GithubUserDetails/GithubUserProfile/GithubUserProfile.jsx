@@ -32,13 +32,13 @@ export default function GithubUserProfile({ profile }) {
         </h2>
         <div>
           <p
-            className={profile.error && styles.error}
+            className={profile.error ? styles.error : undefined}
             ref={(el) => (elements.current.bio = el)}
           >
             {texts.bio}
           </p>
           <p
-            className={profile.error && styles.error}
+            className={profile.error ? styles.error : undefined}
             ref={(el) => (elements.current.location = el)}
           >
             {texts.location}

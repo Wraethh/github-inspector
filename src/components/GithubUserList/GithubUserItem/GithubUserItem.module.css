@@ -1,7 +1,8 @@
 .item {
     width: 100%;
     margin-top: 0.5rem;
-    transition: scale 0.4s;
+    opacity: 0;
+    transition: scale 0.4s, opacity 0.5s;
 
     @media (pointer: fine) {
         &:hover, &:has(button:focus) {

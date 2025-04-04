@@ -111,3 +111,8 @@
   left: 100%;
   transition: left 0.5s;
 }
+
+li.appear {
+  opacity: 1;
+  transition: opacity 0.5s, scale 0.4s;
+}
