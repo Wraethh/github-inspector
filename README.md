@@ -1,7 +1,5 @@
 # 🧑‍💻 Hacker Finder
 
-⚠️ Deployed version currently not working as GitHub API key expired ⚠️
-
 This web app lets you search for GitHub users with a bit more style than usual.
 
 This was done for a school project, but I took it further just for fun !
