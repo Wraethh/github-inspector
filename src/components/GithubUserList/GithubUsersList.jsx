@@ -10,7 +10,6 @@ export default function GithubUsersList({
   headerHeight,
 }) {
   const [selectedItem, setSelectedItem] = useState(null);
-  // const [showListItem, setShowListItem] = useState([]);
   const listRef = useRef(null);
   const timeoutId = useRef({});
 
